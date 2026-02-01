@@ -99,7 +99,9 @@ defmodule GigApi.EventsTest do
       _before = event_fixture(%{date: ~D[2024-05-01]})
       _after = event_fixture(%{date: ~D[2024-07-01]})
 
-      results = Events.search_events(%{"date_from" => ~D[2024-06-01], "date_to" => ~D[2024-06-30]})
+      results =
+        Events.search_events(%{"date_from" => ~D[2024-06-01], "date_to" => ~D[2024-06-30]})
+
       assert length(results) == 1
       assert hd(results).id == event.id
     end
