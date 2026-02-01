@@ -43,12 +43,10 @@ defmodule GigApiWeb.EventController do
 
   operation(:create,
     summary: "Create an event",
-    description: "Creates a new event (TODO 1)",
+    description: "Creates a new event with venue association",
     request_body: {"Event params", "application/json", EventSchemas.EventRequest},
     responses: [
       created: {"Created event", "application/json", EventSchemas.EventResponse},
-      not_implemented:
-        {"TODO not complete", "application/json", GigApiWeb.Schemas.ErrorSchemas.ErrorResponse},
       unprocessable_entity:
         {"Validation errors", "application/json",
          GigApiWeb.Schemas.ErrorSchemas.ValidationErrorResponse}
@@ -68,7 +66,7 @@ defmodule GigApiWeb.EventController do
 
   operation(:update,
     summary: "Update an event",
-    description: "Updates an existing event (TODO 2)",
+    description: "Updates an existing event",
     parameters: [
       id: [in: :path, type: :integer, description: "Event ID", required: true]
     ],
@@ -76,8 +74,6 @@ defmodule GigApiWeb.EventController do
     responses: [
       ok: {"Updated event", "application/json", EventSchemas.EventResponse},
       not_found: {"Not Found", "application/json", GigApiWeb.Schemas.ErrorSchemas.ErrorResponse},
-      not_implemented:
-        {"TODO not complete", "application/json", GigApiWeb.Schemas.ErrorSchemas.ErrorResponse},
       unprocessable_entity:
         {"Validation errors", "application/json",
          GigApiWeb.Schemas.ErrorSchemas.ValidationErrorResponse}
@@ -113,7 +109,7 @@ defmodule GigApiWeb.EventController do
 
   operation(:tonight,
     summary: "Tonight's events",
-    description: "Returns all events happening today (TODO 4)",
+    description: "Returns all events happening today",
     responses: [
       ok: {"Tonight's events", "application/json", EventSchemas.EventsResponse}
     ]
@@ -126,7 +122,7 @@ defmodule GigApiWeb.EventController do
 
   operation(:search,
     summary: "Search events",
-    description: "Search events with filters (TODO 3)",
+    description: "Search events with optional filters for city, status, and date range",
     parameters: [
       city: [in: :query, type: :string, description: "Filter by venue city", required: false],
       status: [
