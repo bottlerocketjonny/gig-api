@@ -1,6 +1,8 @@
 # Gig API
 
-Phoenix API for live music events.
+A RESTful API for discovering live music events and venues in Sheffield, built with Phoenix/Elixir.
+
+**[Try it live](https://gig-api-app-production.up.railway.app/swaggerui)** - Interactive API documentation
 
 ## Setup
 
@@ -36,4 +38,5 @@ mix phx.server
 
 ## Docs
 
-Swagger UI: http://localhost:4000/swaggerui
+- Production: https://gig-api-app-production.up.railway.app/swaggerui
+- Local: http://localhost:4000/swaggerui
