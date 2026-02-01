@@ -11,7 +11,10 @@ defmodule GigApiWeb.ApiSpec do
   def spec do
     %OpenApi{
       servers: [
-        %Server{url: "https://gig-api-app-production.up.railway.app", description: "Production server"},
+        %Server{
+          url: "https://gig-api-app-production.up.railway.app",
+          description: "Production server"
+        },
         %Server{url: "http://localhost:4000", description: "Local development server"}
       ],
       info: %Info{
