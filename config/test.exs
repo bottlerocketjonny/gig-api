@@ -1,0 +1,18 @@
+import Config
+
+config :gig_api, GigApi.Repo,
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  database: "gig_api_test#{System.get_env("MIX_TEST_PARTITION")}",
+  pool: Ecto.Adapters.SQL.Sandbox,
+  pool_size: System.schedulers_online() * 2
+
+config :gig_api, GigApiWeb.Endpoint,
+  http: [ip: {127, 0, 0, 1}, port: 4002],
+  secret_key_base: "gig_api_test_secret_key_base_that_is_at_least_64_bytes_long_for_security",
+  server: false
+
+config :logger, level: :warning
+
+config :phoenix, :plug_init_mode, :runtime
