@@ -7,8 +7,7 @@ config :gig_api, GigApiWeb.Endpoint,
     formats: [json: GigApiWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: GigApi.PubSub,
-  live_view: [signing_salt: "gig_api_salt"]
+  pubsub_server: GigApi.PubSub
 
 config :gig_api,
   ecto_repos: [GigApi.Repo],

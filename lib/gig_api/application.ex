@@ -8,8 +8,6 @@ defmodule GigApi.Application do
     children = [
       GigApiWeb.Telemetry,
       GigApi.Repo,
-      {DNSCluster, query: Application.get_env(:gig_api, :dns_cluster_query) || :ignore},
-      {Phoenix.PubSub, name: GigApi.PubSub},
       GigApiWeb.Endpoint
     ]
 

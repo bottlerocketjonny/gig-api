@@ -63,7 +63,7 @@ defmodule GigApiWeb.VenueController do
     with {:ok, %Venue{} = venue} <- Venues.create_venue(venue_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", ~p"/api/venues/#{venue}")
+      |> put_resp_header("location", "/api/venues/#{venue.id}")
       |> render(:show, venue: venue)
     end
   end

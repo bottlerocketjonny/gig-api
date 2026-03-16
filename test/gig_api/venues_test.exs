@@ -79,9 +79,5 @@ defmodule GigApi.VenuesTest do
       assert Venues.get_venue(venue.id) == {:error, :not_found}
     end
 
-    test "change_venue/1 returns a venue changeset" do
-      venue = venue_fixture()
-      assert %Ecto.Changeset{} = Venues.change_venue(venue)
-    end
   end
 end

@@ -59,7 +59,7 @@ defmodule GigApiWeb.EventController do
 
       conn
       |> put_status(:created)
-      |> put_resp_header("location", ~p"/api/events/#{event}")
+      |> put_resp_header("location", "/api/events/#{event.id}")
       |> render(:show, event: event)
     end
   end

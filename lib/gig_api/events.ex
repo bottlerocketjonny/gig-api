@@ -29,15 +29,6 @@ defmodule GigApi.Events do
   end
 
   @doc """
-  Gets a single event. Raises if not found.
-  """
-  def get_event!(id) do
-    Event
-    |> Repo.get!(id)
-    |> Repo.preload(:venue)
-  end
-
-  @doc """
   Creates an event.
   """
   def create_event(attrs \\ %{}) do
@@ -56,13 +47,6 @@ defmodule GigApi.Events do
   """
   def delete_event(%Event{} = event) do
     Repo.delete(event)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking event changes.
-  """
-  def change_event(%Event{} = event, attrs \\ %{}) do
-    Event.changeset(event, attrs)
   end
 
   @doc """
