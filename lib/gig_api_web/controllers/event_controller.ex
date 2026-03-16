@@ -12,15 +12,22 @@ defmodule GigApiWeb.EventController do
 
   operation(:index,
     summary: "List all events",
-    description: "Returns all events with their venue information",
+    description: "Returns a paginated list of events with their venue information",
     responses: [
       ok: {"Events list", "application/json", EventSchemas.EventsResponse}
     ]
   )
 
-  def index(conn, _params) do
-    events = Events.list_events()
-    render(conn, :index, events: events)
+  def index(conn, params) do
+    events_page = Events.list_events(params)
+
+    render(conn, :index,
+      events: events_page.entries,
+      page_number: events_page.page_number,
+      page_size: events_page.page_size,
+      total_pages: events_page.total_pages,
+      total_entries: events_page.total_entries
+    )
   end
 
   operation(:show,
@@ -115,9 +122,16 @@ defmodule GigApiWeb.EventController do
     ]
   )
 
-  def tonight(conn, _params) do
-    events = Events.tonight_events()
-    render(conn, :index, events: events)
+  def tonight(conn, params) do
+    events_page = Events.tonight_events(params)
+
+    render(conn, :index,
+      events: events_page.entries,
+      page_number: events_page.page_number,
+      page_size: events_page.page_size,
+      total_pages: events_page.total_pages,
+      total_entries: events_page.total_entries
+    )
   end
 
   operation(:search,
@@ -153,7 +167,14 @@ defmodule GigApiWeb.EventController do
   )
 
   def search(conn, params) do
-    events = Events.search_events(params)
-    render(conn, :index, events: events)
+    events_page = Events.search_events(params)
+
+    render(conn, :index,
+      events: events_page.entries,
+      page_number: events_page.page_number,
+      page_size: events_page.page_size,
+      total_pages: events_page.total_pages,
+      total_entries: events_page.total_entries
+    )
   end
 end

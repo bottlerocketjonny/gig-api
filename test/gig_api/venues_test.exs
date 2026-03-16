@@ -78,6 +78,5 @@ defmodule GigApi.VenuesTest do
       assert {:ok, %Venue{}} = Venues.delete_venue(venue)
       assert Venues.get_venue(venue.id) == {:error, :not_found}
     end
-
   end
 end

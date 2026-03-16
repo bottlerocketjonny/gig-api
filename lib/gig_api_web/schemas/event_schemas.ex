@@ -94,8 +94,14 @@ defmodule GigApiWeb.Schemas.EventSchemas do
       title: "EventsResponse",
       description: "List of events response",
       type: :object,
-      properties: %{data: %Schema{type: :array, items: Event}},
-      required: [:data]
+      properties: %{
+        data: %Schema{type: :array, items: Event},
+        page_number: %Schema{type: :integer, description: "Current page number"},
+        page_size: %Schema{type: :integer, description: "Current page size"},
+        total_pages: %Schema{type: :integer, description: "Total pages"},
+        total_entries: %Schema{type: :integer, description: "Total entries"}
+      },
+      required: [:data, :page_number, :page_size, :total_pages, :total_entries]
     })
   end
 end

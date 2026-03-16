@@ -5,8 +5,20 @@ defmodule GigApiWeb.EventJSON do
   @doc """
   Renders a list of events.
   """
-  def index(%{events: events}) do
-    %{data: for(event <- events, do: data(event))}
+  def index(%{
+        events: events,
+        page_number: page_number,
+        page_size: page_size,
+        total_pages: total_pages,
+        total_entries: total_entries
+      }) do
+    %{
+      data: for(event <- events, do: data(event)),
+      page_number: page_number,
+      page_size: page_size,
+      total_pages: total_pages,
+      total_entries: total_entries
+    }
   end
 
   @doc """

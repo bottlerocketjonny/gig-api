@@ -37,7 +37,8 @@ defmodule GigApi.MixProject do
       {:jason, "~> 1.2"},
       {:bandit, "~> 1.5"},
       {:open_api_spex, "~> 3.18"},
-      {:cors_plug, "~> 3.0"}
+      {:cors_plug, "~> 3.0"},
+      {:scrivener_ecto, "~> 3.0"}
     ]
   end
 

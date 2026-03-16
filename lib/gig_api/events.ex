@@ -10,10 +10,10 @@ defmodule GigApi.Events do
   @doc """
   Returns the list of events with preloaded venue.
   """
-  def list_events do
+  def list_events(params) do
     Event
     |> preload(:venue)
-    |> Repo.all()
+    |> Repo.paginate(params)
   end
 
   @doc """
@@ -65,15 +65,15 @@ defmodule GigApi.Events do
     |> maybe_filter_by_date_from(params)
     |> maybe_filter_by_date_to(params)
     |> preload(:venue)
-    |> Repo.all()
+    |> Repo.paginate(params)
   end
 
   @doc """
   Returns all events happening today.
   """
-  def tonight_events do
+  def tonight_events(params) do
     from(e in Event, where: e.date == ^Date.utc_today(), preload: :venue)
-    |> Repo.all()
+    |> Repo.paginate(params)
   end
 
   @doc """
