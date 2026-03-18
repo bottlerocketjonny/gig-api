@@ -14,6 +14,8 @@ defmodule GigApiWeb.Router do
     get "/events/tonight", EventController, :tonight
     get "/search/events", EventController, :search
     resources "/events", EventController, except: [:new, :edit]
+
+    post "/events/:id/buy", EventController, :buy
   end
 
   scope "/" do

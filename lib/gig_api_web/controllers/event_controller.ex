@@ -118,6 +118,24 @@ defmodule GigApiWeb.EventController do
     end
   end
 
+  operation(:buy,
+    summary: "Buy a ticket",
+    description: "Atomically purchases a ticket for an event and checks for sold out status",
+    parameters: [
+      id: [in: :path, type: :integer, description: "Event ID", required: true]
+    ],
+    responses: [
+      ok: {"Updated event", "application/json", EventSchemas.EventResponse},
+      not_found: {"Not Found", "application/json", GigApiWeb.Schemas.ErrorSchemas.ErrorResponse}
+    ]
+  )
+
+  def buy(conn, %{"id" => event_id}) do
+    with {:ok, %Event{} = event} <- Events.buy_ticket(event_id) do
+      render(conn, :show, event: event)
+    end
+  end
+
   operation(:tonight,
     summary: "Tonight's events",
     description: "Returns all events happening today",

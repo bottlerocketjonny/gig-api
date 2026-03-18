@@ -8,6 +8,8 @@ defmodule GigApi.Application do
     children = [
       GigApiWeb.Telemetry,
       GigApi.Repo,
+      {Phoenix.PubSub, name: GigApi.PubSub},
+      GigApi.Events.SoldOutChecker,
       GigApiWeb.Endpoint
     ]
 

@@ -22,6 +22,14 @@ defmodule GigApiWeb.FallbackController do
     |> render(:"404")
   end
 
+  # This clause handles sold out errors
+  def call(conn, {:error, :sold_out}) do
+    conn
+    |> put_status(:conflict)
+    |> put_view(json: GigApiWeb.ErrorJSON)
+    |> render(:"409")
+  end
+
   # This clause handles not implemented errors (for TODOs).
   def call(conn, {:error, :not_implemented}) do
     conn

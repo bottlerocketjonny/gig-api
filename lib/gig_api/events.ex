@@ -4,6 +4,7 @@ defmodule GigApi.Events do
   """
 
   import Ecto.Query, warn: false
+  alias Ecto.Multi
   alias GigApi.Repo
   alias GigApi.Events.Event
 
@@ -47,6 +48,43 @@ defmodule GigApi.Events do
   """
   def delete_event(%Event{} = event) do
     Repo.delete(event)
+  end
+
+  @doc """
+  Buy a ticket for an event and broadcast if it is sold out
+  """
+  def buy_ticket(event_id) do
+    result =
+      Multi.new()
+      |> Multi.run(:event, fn _repo, _changes ->
+        case get_event(event_id) do
+          {:ok, event} ->
+            if event.tickets_sold >= event.venue.capacity do
+              {:error, :sold_out}
+            else
+              {:ok, event}
+            end
+
+          error ->
+            error
+        end
+      end)
+      |> Multi.run(:update_tickets, fn _repo, %{event: event} ->
+        update_event(event, %{tickets_sold: event.tickets_sold + 1})
+      end)
+      |> Multi.run(:check_sold_out, fn _repo, %{update_tickets: event} ->
+        check_sold_out(event)
+      end)
+      |> Repo.transaction()
+
+    case result do
+      {:ok, %{check_sold_out: event}} ->
+        Phoenix.PubSub.broadcast(GigApi.PubSub, "events", {:ticket_purchased, event})
+        {:ok, event}
+
+      {:error, _step, reason, _changes} ->
+        {:error, reason}
+    end
   end
 
   @doc """
