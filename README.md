@@ -26,8 +26,13 @@ mix phx.server
 | POST | `/api/events` | Create event |
 | PUT | `/api/events/:id` | Update event |
 | DELETE | `/api/events/:id` | Delete event |
+| POST | `/api/events/:id/buy` | Buy a ticket |
 | GET | `/api/events/tonight` | Today's events |
 | GET | `/api/search/events` | Search events |
+
+### Pagination
+
+All list endpoints accept `page` and `page_size` query params and return paginated responses with `page_number`, `page_size`, `total_pages`, and `total_entries`.
 
 ### Search params
 
@@ -35,6 +40,10 @@ mix phx.server
 - `status` - `announced`, `on_sale`, `sold_out`, `cancelled`
 - `date_from` - Events on/after date (YYYY-MM-DD)
 - `date_to` - Events on/before date (YYYY-MM-DD)
+
+### Ticket purchasing
+
+`POST /api/events/:id/buy` atomically increments `tickets_sold` using `Ecto.Multi`. When capacity is reached, the event status is set to `sold_out` within the same transaction. A PubSub broadcast notifies a `SoldOutChecker` GenServer which handles async side effects (logging, notifications).
 
 ## Docs
 
