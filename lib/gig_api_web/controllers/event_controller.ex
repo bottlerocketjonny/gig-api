@@ -13,6 +13,10 @@ defmodule GigApiWeb.EventController do
   operation(:index,
     summary: "List all events",
     description: "Returns a paginated list of events with their venue information",
+    parameters: [
+      page: [in: :query, type: :integer, description: "Page number", required: false],
+      page_size: [in: :query, type: :integer, description: "Results per page", required: false]
+    ],
     responses: [
       ok: {"Events list", "application/json", EventSchemas.EventsResponse}
     ]
@@ -117,6 +121,10 @@ defmodule GigApiWeb.EventController do
   operation(:tonight,
     summary: "Tonight's events",
     description: "Returns all events happening today",
+    parameters: [
+      page: [in: :query, type: :integer, description: "Page number", required: false],
+      page_size: [in: :query, type: :integer, description: "Results per page", required: false]
+    ],
     responses: [
       ok: {"Tonight's events", "application/json", EventSchemas.EventsResponse}
     ]
@@ -138,6 +146,8 @@ defmodule GigApiWeb.EventController do
     summary: "Search events",
     description: "Search events with optional filters for city, status, and date range",
     parameters: [
+      page: [in: :query, type: :integer, description: "Page number", required: false],
+      page_size: [in: :query, type: :integer, description: "Results per page", required: false],
       city: [in: :query, type: :string, description: "Filter by venue city", required: false],
       status: [
         in: :query,
